@@ -1,6 +1,7 @@
 #El proyecto consite en un generador de passwords.
 #Para que las passwors sean mas seguras, se crearan numeros apartir de la suma de dos numero aleatorios
 import random
+import string
 
 def generar_primer_segmento_contrasena():
     # Generar dos números aleatorios
@@ -21,16 +22,32 @@ def generar_segundo_segmento_contrasena():
     caracter = (num1*num3)//num2
     return caracter
 
+def letra_azar_mayuscula():
+    letra = random.choice(string.ascii_lowercase)  # Selecciona una letra al azar de las minúsculas
+    return letra.upper()  # Convierte la letra a mayúscula
 
+def letra_azar_minuscula():
+    letra = random.choice(string.ascii_uppercase)  # Selecciona una letra al azar de las mayúsculas
+    return letra.lower()  # Convierte la letra a minúscula
+num = int
+signo = ""
+mayusculas = ""
+minusculas = ""
 
-# Este sería solo el primer segmento de la contraseña
-primer_segmento = generar_primer_segmento_contrasena()
-print(f"Segmento de la contraseña: {primer_segmento}")
-
-# Este seria solo el segundo segmento de la contrasena
-segundo_segmento = generar_segundo_segmento_contrasena()
-print(f"Segmento de la contrasena: {segundo_segmento}")
-
-#Esta seria la contrasena generado por el momento
-contrasena_generada = f"{primer_segmento}{segundo_segmento}"
-print(f"Tu contrasena es: {contrasena_generada}")
+segmento_num = int (input("Desea que su password contenga números: 1. Si / 2.No "))
+segmento_signos = int (input("Desea que su password contenga signos: 1. Si / 2.No "))
+segmento_minusculas = int (input("Desea que su password contenga letras minusculas: 1. Si / 2.No "))
+segmento_mayusculas = int (input("Desea que su password contenga letras mayusculas: 1. Si / 2.No "))
+if segmento_num == 1: 
+    num = generar_segundo_segmento_contrasena
+    password = f"{num}"
+elif segmento_signos == 1:
+    signo = generar_primer_segmento_contrasena
+    password = f"{signo}"
+elif segmento_minusculas == 1:
+    minusculas = letra_azar_minuscula 
+    password = f"{minusculas}"
+elif segmento_mayusculas == 1:
+    mayusculas = letra_azar_mayuscula
+    password = f"{mayusculas}"
+print (f"Password generada: {password}")
