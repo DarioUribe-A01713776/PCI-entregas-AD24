@@ -1,53 +1,49 @@
 #El proyecto consite en un generador de passwords.
-#Para que las passwors sean mas seguras, se crearan numeros apartir de la suma de dos numero aleatorios
 import random
 import string
+import secrets
 
-def generar_primer_segmento_contrasena():
-    # Generar dos números aleatorios
-    num1 = random.randint(1, 9)
-    num2 = random.randint(1, 9)
-    resultado = num1 + num2
-    caracter = chr((resultado % 94) + 33) #convertimos el numero a un caracter
-    return caracter
+def segmento_num():
+    #Generamos un numero aleatorio seguro entre 0 y 99
+    num = secrets.randbelow(100)
+    #Pasamos el numero a un caracter
+    return str(num)
 
-def generar_segundo_segmento_contrasena():
-    #generamos tres numero aleatorios
-    num1 = random.randint(1, 9)
-    num2 = random.randint(1, 9)
-    num3=random.randint(1,9)
-    # para que la contrasena sea mas segura, vamos a generar un numero
-    # que es el resultante de la division del producto de tres numeros 
-    # generados aleatoriamente
-    caracter = (num1*num3)//num2
-    return caracter
+def segmento_simbolos():
+    #Defenimos el conjunto de simbolos
+    simbolos = string.punctuation
+    #Se toma un caracter aleatorio
+    return secrets.choice(simbolos)
 
-def letra_azar_mayuscula():
-    letra = random.choice(string.ascii_lowercase)  # Selecciona una letra al azar de las minúsculas
-    return letra.upper()  # Convierte la letra a mayúscula
+def segmento_letra_mn():
+    #Se toma un letra minuscula aleatoriamente
+    letra_minuscula = random.choice(string.ascii_lowercase)
+    return letra_minuscula
 
-def letra_azar_minuscula():
-    letra = random.choice(string.ascii_uppercase)  # Selecciona una letra al azar de las mayúsculas
-    return letra.lower()  # Convierte la letra a minúscula
-num = int
-signo = ""
-mayusculas = ""
-minusculas = ""
+def segmento_letra_my():
+    #Se toma un letra mayuscula aleatoriamente
+    letra_mayuscula = random.choice(string.ascii_uppercase)
+    return letra_mayuscula
 
-segmento_num = int (input("Desea que su password contenga números: 1. Si / 2.No "))
-segmento_signos = int (input("Desea que su password contenga signos: 1. Si / 2.No "))
-segmento_minusculas = int (input("Desea que su password contenga letras minusculas: 1. Si / 2.No "))
-segmento_mayusculas = int (input("Desea que su password contenga letras mayusculas: 1. Si / 2.No "))
-if segmento_num == 1: 
-    num = generar_segundo_segmento_contrasena
-    password = f"{num}"
-elif segmento_signos == 1:
-    signo = generar_primer_segmento_contrasena
-    password = f"{signo}"
-elif segmento_minusculas == 1:
-    minusculas = letra_azar_minuscula 
-    password = f"{minusculas}"
-elif segmento_mayusculas == 1:
-    mayusculas = letra_azar_mayuscula
-    password = f"{mayusculas}"
-print (f"Password generada: {password}")
+#Creamos un ciclo while para que el usuario pueda generar otra password
+otro = "S"
+while otro == "S":
+    num_pswd = input("Deseas que tu password contenga números: S / N ").upper()
+    simbolos_pswd = input("Deseas que tu password contenga simbolos: S / N ").upper()
+    letra_pswd = input("Deseas que tu password contenga letra: S / N ").upper()
+
+    password_generada = ""
+
+    if num_pswd == "S":
+        password_generada += segmento_num()
+    if simbolos_pswd == "S": 
+        password_generada += segmento_simbolos()
+    if letra_pswd == "S":
+        password_generada += segmento_letra_mn() + segmento_letra_my()
+
+    if password_generada:
+        print("Password generada: ",password_generada)
+    else:
+        print("No se genero ninguna password")
+    
+    otro = input ("Deseas generar otra password: S / N ").upper()
